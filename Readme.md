@@ -229,7 +229,3 @@ Contact & Support
 📧 Email: `fuqbucdoom@gmail.com` 
 
 If you find any issues or have feature requests, feel free to **open an issue** in this repository!  
-
----
-
-Now this README fully highlights **Bagh’s use of Bengali words**, making it stand out from other programming languages! 🚀🔥 Let me know if you need more refinements!

@@ -1,0 +1,23 @@
+Bagh IDE License
+Bagh Version: Pre-Alpha Test V0.2
+Version: Pre-Alpha v0.1
+Last Updated: 2/18/2025
+
+1. License Grant
+This software is licensed under an open-source model. You are permitted to:
+
+Use, modify, and distribute the software for personal, educational, or commercial purposes.
+Fork and enhance the project while maintaining the original licensing terms.
+2. Attribution Requirement
+Credit to the original author(s) is required in any distribution, modification, or derivative work.
+Proper attribution must be included in the software, documentation, or any related materials.
+3. Restrictions
+You cannot claim ownership of the original project or falsely represent it as your own.
+You must not remove or alter this license when redistributing modified versions.
+4. Warranty Disclaimer
+This software is provided "as is", without any express or implied warranties.
+The authors are not responsible for any damage, data loss, or unintended consequences caused by the use of this software.
+5. Liability Limitation
+Under no circumstances shall the authors be held liable for any direct, indirect, incidental, or consequential damages arising from the use or inability to use this software.
+By using, modifying, or distributing Bagh IDE, you agree to comply with the terms outlined in this license.
+© 2025 Bagh and Bagh IDE Contributors and Python.

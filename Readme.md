@@ -1,7 +1,7 @@
 # **Bagh Programming Language**  
 ### **Pre-Alpha v0.1**  
 
-**Bagh** is a unique programming language that stands out because it uses **Bengali words for commands and syntax** instead of English. This makes programming more accessible for Bengali speakers, allowing them to write code in their native language while still maintaining the power of a structured programming language.  
+**Bagh** is a unique programming language that stands out because it uses **Bengali words for commands and syntax** instead of English. This makes programming more accessible for Bengali speakers, allowing them to write code in their native language while still maintaining the power of a structured programming language. advance feature works only in raw Python Version we will upate EXE/app Version later. 
 
 This project is currently in **pre-alpha development**, meaning new features are still being added, and improvements are ongoing.  
 

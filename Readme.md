@@ -1,6 +1,3 @@
-## **Curently Under Maintanance**
-We have Many Issue Lack of features in this language due Improper VM and ByteCode Handling I spend average 7-8 Hour Fixing those But Was not able to so It will be under maintanance for 3-4 Weeks, Honestly I need help fixing it can yall contribute help me fix it, Please..
-
 # **Bagh Programming Language**  
 ### **Pre-Alpha v0.1**  
 
@@ -50,8 +47,8 @@ Bagh is an interpreted language. Code written in **Bagh** is **compiled to bytec
 
 Example:  
 ```bagh
-lekho("হ্যালো, বাঘ!")  # Prints a message
-gonona(5 + 3)          # Performs a mathematical calculation
+lekho হ্যালো, বাঘ!  # Prints a message
+gonona 5 + 3          # Performs a mathematical calculation
 ```
 
 ---
@@ -60,7 +57,7 @@ gonona(5 + 3)          # Performs a mathematical calculation
 
 ### **1. Printing Output**  
 ```bagh
-lekho("হ্যালো, বিশ্ব!")
+lekho হ্যালো, বিশ্ব!
 ```
 🟢 **Outputs**: `হ্যালো, বিশ্ব!`  
 This command prints text to the output console.  
@@ -71,7 +68,7 @@ This command prints text to the output console.
 ```bagh
 x = ১০
 y = ২০
-lekho(x + y)
+lekho x + y
 ```
 🟢 **Outputs**: `৩০`  
 - Variables can store numbers or text.  
@@ -81,8 +78,8 @@ lekho(x + y)
 
 ### **3. User Input**  
 ```bagh
-name = grohon("তোমার নাম কী? ")
-lekho("স্বাগতম, " + name)
+name = grohon তোমার নাম কী?
+lekho স্বাগতম,  + name
 ```
 🟢 **Takes user input and prints a greeting.**  
 
@@ -90,8 +87,8 @@ lekho("স্বাগতম, " + name)
 
 ### **4. Math Operations**  
 ```bagh
-result = gonona(১০ * ৫ - ২)
-lekho(result)
+result = gonona ১০ * ৫ - ২
+lekho result
 ```
 🟢 **Outputs**: `৪৮`  
 - `gonona(expression)` performs calculations.  

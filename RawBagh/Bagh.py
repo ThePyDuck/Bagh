@@ -1,8 +1,9 @@
 import re
 import tkinter as tk
-from tkinter import scrolledtext, filedialog, Menu
+from tkinter import scrolledtext, filedialog, Menu, simpledialog
 import datetime
 import hashlib
+import random
 
 class BaghCompiler:
     def __init__(self):
@@ -22,41 +23,38 @@ class BaghCompiler:
                 command = match.group(1)
                 args = match.group(2).strip() if match.group(2) else ""
 
-                if command == "lekho":
+                if "=" in line:
+                    var_name, value = map(str.strip, line.split("=", 1))
+                    bytecode.append(f"SET_VAR {var_name} {value}")
+                elif command == "lekho":
                     bytecode.append(f"PRINT {args}")
-
                 elif command == "kaj":
                     bytecode.append(f"FUNC_START {args}")
-
                 elif command == "shesh":
                     bytecode.append("FUNC_END")
-
                 elif command == "ghoomta":
                     if not args.isdigit():
                         return ["ERROR Loop count must be a number"]
                     bytecode.append(f"LOOP_START {args}")
-
                 elif command == "jodi":
                     bytecode.append(f"IF {args}")
-
                 elif command == "nahole":
                     bytecode.append("ELIF")
-
                 elif command == "jodi na":
                     bytecode.append("ELSE")
-
                 elif command == "tarikh":
                     bytecode.append("DATE")
-
                 elif command == "somoy":
                     bytecode.append("TIME")
-
                 elif command == "encrypt":
                     bytecode.append(f"ENCRYPT {args}")
-
+                elif command == "grohon":
+                    bytecode.append(f"INPUT {args}")
+                elif command == "random":
+                    bytecode.append(f"RANDOM {args}")
                 else:
                     bytecode.append(f"ERROR Unknown command: {line}")
-
+        
         return bytecode
 
 class BaghVM:
@@ -69,16 +67,25 @@ class BaghVM:
 
         while i < len(bytecode):
             instruction = bytecode[i]
-            tokens = instruction.split(" ", 1)
+            tokens = instruction.split(" ", 2)
             opcode = tokens[0]
-            args = tokens[1] if len(tokens) > 1 else ""
+            args = tokens[1:] if len(tokens) > 1 else []
 
-            if opcode == "PRINT":
-                console_output.append(args)
-
+            if opcode == "SET_VAR":
+                var_name, value = args
+                try:
+                    self.variables[var_name] = eval(value, {}, self.variables)
+                except:
+                    self.variables[var_name] = value
+            elif opcode == "PRINT":
+                expression = " ".join(args)
+                try:
+                    console_output.append(str(eval(expression, {}, self.variables)))
+                except:
+                    console_output.append(expression)
             elif opcode == "LOOP_START":
                 try:
-                    loop_count = int(args)
+                    loop_count = int(args[0])
                     loop_body = []
                     i += 1
                     while i < len(bytecode) and bytecode[i] != "FUNC_END":
@@ -89,41 +96,41 @@ class BaghVM:
                 except ValueError:
                     console_output.append("⚠ Loop Error: Invalid loop count")
                     return
-
             elif opcode == "IF":
-                condition = args.strip()
+                condition = " ".join(args).strip()
                 if eval(condition, {}, self.variables):
                     console_output.append(f"Condition met: {condition}")
-
             elif opcode == "DATE":
                 console_output.append(str(datetime.date.today()))
-
             elif opcode == "TIME":
                 console_output.append(datetime.datetime.now().strftime("%H:%M:%S"))
-
             elif opcode == "ENCRYPT":
-                console_output.append(hashlib.sha256(args.encode()).hexdigest())
-
+                console_output.append(hashlib.sha256(" ".join(args).encode()).hexdigest())
+            elif opcode == "INPUT":
+                var_name = args[0]
+                self.variables[var_name] = simpledialog.askstring("Input", f"Enter value for {var_name}:")
+            elif opcode == "RANDOM":
+                start, end = map(int, args)
+                console_output.append(str(random.randint(start, end)))
             elif opcode == "ERROR":
                 console_output.append(f"⚠ {args}")
                 return
 
             i += 1
 
-        # Print to console
         for line in console_output:
             print(line)
 
-        # Show in GUI Output Box
         output_box.insert(tk.END, "\n".join(console_output) + "\n")
         output_box.see(tk.END)
 
 class BaghIDE:
     def __init__(self):
         self.editor = tk.Tk()
-        self.editor.title("Bagh IDE Pre-Alpha V1 Bagh Pre-Alpha V0.1")
-        self.editor.geometry("900x600")
+        self.editor.title("Bagh IDE")
         self.editor.iconbitmap("bagh.ico")
+        self.editor.geometry("900x600")
+
         menu_bar = Menu(self.editor)
         self.editor.config(menu=menu_bar)
 
@@ -139,13 +146,6 @@ class BaghIDE:
         self.output_box.pack(fill='x')
 
         menu_bar.add_command(label="Run", command=self.run_code)
-
-        # Define and pack the Run button
-        self.run_button = tk.Button(self.editor, text="Run", command=self.run_code)
-        self.run_button.pack(pady=10)
-
-    # Other methods remain unchanged
-
 
     def save_file(self):
         file_path = filedialog.asksaveasfilename()

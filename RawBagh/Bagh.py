@@ -52,6 +52,12 @@ class BaghCompiler:
                     bytecode.append(f"INPUT {args}")
                 elif command == "random":
                     bytecode.append(f"RANDOM {args}")
+                elif command == "gonona":
+                    bytecode.append(f"EXPRESSION {args}")
+                elif command == "poro_file":
+                    bytecode.append(f"READ_FILE {args}")
+                elif command == "lekho_file":
+                    bytecode.append(f"WRITE_FILE {args}")
                 else:
                     bytecode.append(f"ERROR Unknown command: {line}")
         
@@ -112,6 +118,31 @@ class BaghVM:
             elif opcode == "RANDOM":
                 start, end = map(int, args)
                 console_output.append(str(random.randint(start, end)))
+            elif opcode == "EXPRESSION":
+                expression = " ".join(args)
+                try:
+                    result = eval(expression, {}, self.variables)
+                    console_output.append(f"Result: {result}")
+                except:
+                    console_output.append("⚠ Error: Invalid expression")
+            elif opcode == "READ_FILE":
+                filename = args[0]
+                try:
+                    with open(filename, "r", encoding="utf-8") as file:
+                        content = file.read()
+                        console_output.append(f"File content: {content}")
+                        self.variables["file_content"] = content
+                except Exception as e:
+                    console_output.append(f"⚠ Error reading file: {e}")
+            elif opcode == "WRITE_FILE":
+                filename = args[0]
+                content = self.variables.get("file_content", "")
+                try:
+                    with open(filename, "w", encoding="utf-8") as file:
+                        file.write(content)
+                    console_output.append(f"File written: {filename}")
+                except Exception as e:
+                    console_output.append(f"⚠ Error writing file: {e}")
             elif opcode == "ERROR":
                 console_output.append(f"⚠ {args}")
                 return

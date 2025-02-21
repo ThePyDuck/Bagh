@@ -122,7 +122,7 @@ class BaghVM:
                 expression = " ".join(args)
                 try:
                     result = eval(expression, {}, self.variables)
-                    console_output.append(f"Result: {result}")
+                    console_output.append(f"{result}")
                 except:
                     console_output.append("⚠ Error: Invalid expression")
             elif opcode == "READ_FILE":
